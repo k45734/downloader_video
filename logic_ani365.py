@@ -237,7 +237,7 @@ class Ani365QueueEntity(FfmpegQueueEntity):
             else:
                 self.content_title = self.info['title']
                 P.logger.debug('NOT MATCH')
-                ret = '%s.None-SA.mp4' % self.info['title']
+                ret = '%s.720p-SA.mp4' % self.info['title']
             self.filename = Util.change_text_for_use_filename(ret)
             self.savepath = P.ModelSetting.get('ani365_download_path')
             if P.ModelSetting.get_bool('ani365_auto_make_folder'):
