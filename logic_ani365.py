@@ -223,7 +223,7 @@ class Ani365QueueEntity(FfmpegQueueEntity):
                 for t in m3u8.split('\n'):
                     if t.find('m3u8') != -1:
                         self.url = tmp.replace('master.m3u8', t.strip())
-                        #self.quality = t.split('.m3u8')[0]
+                        self.quality = t.split('.m3u8')[0]
             match = re.compile('src\=\"(?P<vtt_url>http.*?\kr.vtt)').search(text)
             if match:
                 self.vtt = match.group('vtt_url')
@@ -237,7 +237,7 @@ class Ani365QueueEntity(FfmpegQueueEntity):
             else:
                 self.content_title = self.info['title']
                 P.logger.debug('NOT MATCH')
-                ret = '%s.720p-SA.mp4' % self.info['title']
+                ret = '%s.None-SA.mp4' % self.info['title']
             self.filename = Util.change_text_for_use_filename(ret)
             self.savepath = P.ModelSetting.get('ani365_download_path')
             if P.ModelSetting.get_bool('ani365_auto_make_folder'):
