@@ -214,7 +214,7 @@ class Ani365QueueEntity(FfmpegQueueEntity):
 
     def make_episode_info(self):
         try:
-			test = 'https://www.ani365.me/kr/detail/' + (self.info['content_code'])
+			test = 'https://www.ani365.me/kr/detail/' + self.info['content_code']
 			s = requests.session()
 			s.get(url,headers=headers, verify=False)
             url = 'https://www.jetcloud-list.cc/kr/episode/' + self.info['va']
