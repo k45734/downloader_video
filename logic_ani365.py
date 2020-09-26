@@ -5,7 +5,6 @@ import os, sys, traceback, re, json, threading
 from datetime import datetime
 # third-party
 import requests
-import urllib
 import urllib.request
 # third-party
 from flask import request, render_template, jsonify
@@ -221,7 +220,7 @@ class Ani365QueueEntity(FfmpegQueueEntity):
             s.get(test,headers=headers, verify=False)
             url = 'https://www.ani365.me/kr/episode/' + self.info['va']
             text = requests.get(url, headers=headers).content
-	    response = urllib.request.urlopen(text).read()
+	    response = urllib.request.urlopen(url).read()
 	    text2 = response.decode('utf-8')
             match = re.compile('src\=\"(?P<video_url>http.*?\.m3u8)').search(text2)
             if match:
