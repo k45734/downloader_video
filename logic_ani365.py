@@ -219,7 +219,8 @@ class Ani365QueueEntity(FfmpegQueueEntity):
             s.get(test,headers=headers, verify=False)
             url = 'https://www.ani365.me/kr/episode/' + self.info['va']
             text = requests.get(url, headers=headers).content
-            match = re.compile('src\=\"(?P<video_url>http.*?\.m3u8)').search(text)
+	    text2 = response.decode('utf-8')
+            match = re.compile('src\=\"(?P<video_url>http.*?\.m3u8)').search(text2)
             if match:
                 tmp = match.group('video_url')
                 m3u8 = requests.get(tmp).content
