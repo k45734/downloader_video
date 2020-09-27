@@ -228,14 +228,8 @@ class Ani365QueueEntity(FfmpegQueueEntity):
                 for t in m3u8.split('\n'):
                     if t.find('m3u8') != -1:
                         self.url = tmp.replace('master.m3u8', t.strip())
-                        self.quality = t.split('.m3u8')[0]
-            test = 'https://www.ani365.me/kr/detail/' + self.info['content_code']
-            s = requests.session()
-            s.get(test,headers=headers, verify=False)
-            url = 'https://www.ani365.me/kr/episode/' + self.info['va']
-            #text = requests.get(url, headers=headers).content
-	    text = requests.get(url, headers=headers).text	    
-            match = re.compile('src\=\"(?P<vtt_url>http.*?\kr.vtt)').search(text)
+                        self.quality = t.split('.m3u8')[0]    
+            match = re.compile('src\=\"(?P<vtt_url>http.*?\.vtt)').search(text)
             if match:
                 self.vtt = match.group('vtt_url')
             match = re.compile(ur'(?P<title>.*?)\s*((?P<season>\d+)기)?\s*((?P<epi_no>\d+)화)').search(self.info['title'])
