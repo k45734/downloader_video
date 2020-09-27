@@ -224,7 +224,7 @@ class Ani365QueueEntity(FfmpegQueueEntity):
             match = re.compile('src\=\"(?P<video_url>http.*?\.m3u8)').search(text)
             if match:
                 tmp = match.group('video_url')
-                m3u8 = requests.get(tmp).content
+                m3u8 = requests.get(tmp, headers=headers).text
                 for t in m3u8.split('\n'):
                     if t.find('m3u8') != -1:
                         self.url = tmp.replace('master.m3u8', t.strip())
