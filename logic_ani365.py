@@ -236,13 +236,6 @@ class Ani365QueueEntity(FfmpegQueueEntity):
             match = re.compile('src\=\"(?P<vtt_url>http.*?\kr.vtt)').search(text)
             if match:
                 self.vtt = u'%s' % match.group('vtt_url')
-                from framework.common.util import write_file, convert_vtt_to_srt
-                srt_filepath = os.path.join(self.savepath, self.filename.replace('.mp4', '.ko.srt'))
-                srt_filepath2 = os.path.join(self.savepath, self.filename.replace('.mp4', '.ko.vtt'))
-                vtt_data = requests.get(self.vtt, headers=LogicAni365.current_headers).content
-                write_file(vtt_data, srt_filepath2)
-                srt_data = convert_vtt_to_srt(vtt_data)
-                write_file(srt_data, srt_filepath)
             match = re.compile(ur'(?P<title>.*?)\s*((?P<season>\d+)기)?\s*((?P<epi_no>\d+)화)').search(self.info['title'])
             if match:
                 self.content_title = match.group('title').strip()
@@ -271,16 +264,14 @@ class Ani365QueueEntity(FfmpegQueueEntity):
             from framework.common.util import write_file, convert_vtt_to_srt
             srt_filepath = os.path.join(self.savepath, self.filename.replace('.mp4', '.ko.srt'))
             srt_filepath2 = os.path.join(self.savepath, self.filename.replace('.mp4', '.ko.vtt'))
-            try:
-                if not os.path.exists(srt_filepath):
-                    request_headers = {'User-Agent' : ('Mozilla/5.0 (Windows NT 10.0; WOW64) \ AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 \ Safari/537.36'), 
-                                      'Authorization': ('3j1kwtebgykfrq3w44gcxsua9ckjqujor2OdyeOdNd9a3gtQf1')}
-                    vtt_data = requests.get(self.vtt, headers=LogicAni365.current_headers).content
-                    write_file(vtt_data, srt_filepath2)
-                    srt_data = convert_vtt_to_srt(vtt_data)
-                    write_file(srt_data, srt_filepath)
-            except:
-                pass
+            if not os.path.exists(srt_filepath):
+                request_headers = {'User-Agent' : ('Mozilla/5.0 (Windows NT 10.0; WOW64) \ AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 \ Safari/537.36'), 
+                                'Authorization': ('3j1kwtebgykfrq3w44gcxsua9ckjqujor2OdyeOdNd9a3gtQf1')}
+                vtt_data = requests.get(self.vtt, headers=LogicAni365.current_headers).content
+                write_file(vtt_data, srt_filepath2)
+                srt_data = convert_vtt_to_srt(vtt_data)
+                write_file(srt_data, srt_filepath)
+
                 
             self.headers = request_headers
 
