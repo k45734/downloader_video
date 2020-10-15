@@ -274,7 +274,10 @@ class Ani365QueueEntity(FfmpegQueueEntity):
                     write_file(srt_data, srt_filepath)
             except:
                 match = re.compile('src\=\"(?P<vtt_url>http.*?\kr.vtt)').search(text)
-                print(match.text)
+                vtt_data = requests.get(match, headers=request_headers).content
+                write_file(vtt_data, srt_filepath2)
+                srt_data = convert_vtt_to_srt(vtt_data)
+                write_file(srt_data, srt_filepath)
                 
             self.headers = request_headers
 
