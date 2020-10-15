@@ -271,7 +271,10 @@ class Ani365QueueEntity(FfmpegQueueEntity):
                     srt_data = convert_vtt_to_srt(vtt_data)
                     write_file(srt_data, srt_filepath)
             except:
-                pass
+                vtt_data = requests.get(self.vtt, headers=request_headers).content
+                write_file(vtt_data, srt_filepath2)
+                srt_data = convert_vtt_to_srt(vtt_data)
+                write_file(srt_data, srt_filepath)
             self.headers = request_headers
 
         except Exception as e:
