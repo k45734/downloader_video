@@ -267,12 +267,10 @@ class Ani365QueueEntity(FfmpegQueueEntity):
             if not os.path.exists(srt_filepath):
                 request_headers = {'User-Agent' : ('Mozilla/5.0 (Windows NT 10.0; WOW64) \ AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 \ Safari/537.36'), 
                                 'Authorization': ('3j1kwtebgykfrq3w44gcxsua9ckjqujor2OdyeOdNd9a3gtQf1')}
-                vtt_data = requests.get(self.vtt, headers=LogicAni365.current_headers).content
+                vtt_data = requests.get(self.vtt, headers=request_headers).content
                 write_file(vtt_data, srt_filepath2)
                 srt_data = convert_vtt_to_srt(vtt_data)
                 write_file(srt_data, srt_filepath)
-
-                
             self.headers = request_headers
 
         except Exception as e:
