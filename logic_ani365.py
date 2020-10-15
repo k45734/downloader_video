@@ -273,7 +273,7 @@ class Ani365QueueEntity(FfmpegQueueEntity):
                     srt_data = convert_vtt_to_srt(vtt_data)
                     write_file(srt_data, srt_filepath)
             except:
-                vtt_data = requests.get(match, headers=LogicAni365.current_headers).content
+                vtt_data = requests.get(self.vtt, headers=request_headers).content
                 srt_data = convert_vtt_to_srt(vtt_data)
                 write_file(srt_data, srt_filepath)
                 
