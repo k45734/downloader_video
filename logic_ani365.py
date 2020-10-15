@@ -235,10 +235,8 @@ class Ani365QueueEntity(FfmpegQueueEntity):
                         self.quality = t.split('.m3u8')[0]
             match = re.compile('src\=\"(?P<vtt_url>http.*?\kr.vtt)').search(text)
             if match:
-                   try:
-                        self.vtt = u'%s' % match.group('vtt_url')
-                   execpt:
-                        self.vtt = match.group('vtt_url')
+                self.vtt = u'%s' % match.group('vtt_url')
+                self.vtt2 = match.group('vtt_url')                
             match = re.compile(ur'(?P<title>.*?)\s*((?P<season>\d+)기)?\s*((?P<epi_no>\d+)화)').search(self.info['title'])
             if match:
                 self.content_title = match.group('title').strip()
@@ -275,7 +273,7 @@ class Ani365QueueEntity(FfmpegQueueEntity):
                     srt_data = convert_vtt_to_srt(vtt_data)
                     write_file(srt_data, srt_filepath)
             except:
-                vtt_data = requests.get(self.vtt, headers=request_headers).content
+                vtt_data = requests.get(self.vtt2, headers=request_headers).content
                 write_file(vtt_data, srt_filepath2)
                 srt_data = convert_vtt_to_srt(vtt_data)
                 write_file(srt_data, srt_filepath)
