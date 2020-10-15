@@ -224,11 +224,11 @@ class Ani365QueueEntity(FfmpegQueueEntity):
             url = 'https://www.jetcloud-list.cc/kr/episode/' + self.info['va']
             request_headers = {'User-Agent' : ('Mozilla/5.0 (Windows NT 10.0; WOW64) \ AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 \ Safari/537.36'), }
             
-            text = requests.get(url, headers=request_headers).content
+            text = requests.get(url, headers=LogicAni365.current_headers).content
             match = re.compile('src\=\"(?P<video_url>http.*?\.m3u8)').search(text)
             if match:
                 tmp = match.group('video_url')
-                m3u8 = requests.get(tmp, headers=request_headers).content
+                m3u8 = requests.get(tmp, headers=LogicAni365.current_headers).content
                 for t in m3u8.split('\n'):
                     if t.find('m3u8') != -1:
                         self.url = tmp.replace('master.m3u8', t.strip())
@@ -268,12 +268,12 @@ class Ani365QueueEntity(FfmpegQueueEntity):
                 if not os.path.exists(srt_filepath):
                     request_headers = {'User-Agent' : ('Mozilla/5.0 (Windows NT 10.0; WOW64) \ AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 \ Safari/537.36'), 
                                       'Authorization': ('3j1kwtebgykfrq3w44gcxsua9ckjqujor2OdyeOdNd9a3gtQf1')}
-                    vtt_data = requests.get(self.vtt, headers=request_headers).content
+                    vtt_data = requests.get(self.vtt, headers=LogicAni365.current_headers).content
                     write_file(vtt_data, srt_filepath2)
                     srt_data = convert_vtt_to_srt(vtt_data)
                     write_file(srt_data, srt_filepath)
             except:
-                vtt_data = requests.get(match, headers=request_headers).content
+                vtt_data = requests.get(match, headers=LogicAni365.current_headers).content
                 srt_data = convert_vtt_to_srt(vtt_data)
                 write_file(srt_data, srt_filepath)
                 
