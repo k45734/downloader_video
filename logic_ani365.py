@@ -226,11 +226,11 @@ class Ani365QueueEntity(FfmpegQueueEntity):
                               'Authorization': 'lvjghte3utuek0Qdvs3o8utygtwjnQt74Ojkwk7P1f3awws2hd',
                               }
             
-            text = requests.get(url, headers=request_headers).content
+            text = requests.get(url, headers=headers).content
             match = re.compile('src\=\"(?P<video_url>http.*?\.m3u8)').search(text)
             if match:
                 tmp = match.group('video_url')
-                m3u8 = requests.get(tmp, headers=request_headers).content
+                m3u8 = requests.get(tmp, headers=LogicAni365.current_headers).content
                 for t in m3u8.split('\n'):
                     if t.find('m3u8') != -1:
                         self.url = tmp.replace('master.m3u8', t.strip())
@@ -268,11 +268,11 @@ class Ani365QueueEntity(FfmpegQueueEntity):
             srt_filepath = os.path.join(self.savepath, self.filename.replace('.mp4', '.ko.srt'))
             srt_filepath2 = os.path.join(self.savepath, self.filename.replace('.mp4', '.ko.vtt'))
             if not os.path.exists(srt_filepath):
-                vtt_data = requests.get(self.vtt, headers=request_headers).content
-                write_file(vtt_data, srt_filepath2)
+                vtt_data = requests.get(self.vtt, headers=LogicAni365.current_headers).content
+                write_file2(self.vtt, srt_filepath2)
                 srt_data = convert_vtt_to_srt(vtt_data)
-                write_file(srt_data, srt_filepath)
-            self.headers = request_headers
+                write_file(srt_data, srt_filepath) 
+            self.headers = LogicAni365.current_headers
 
         except Exception as e:
             P.logger.error('Exception:%s', e)
