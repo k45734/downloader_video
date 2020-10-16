@@ -269,7 +269,7 @@ class Ani365QueueEntity(FfmpegQueueEntity):
             srt_filepath2 = os.path.join(self.savepath, self.filename.replace('.mp4', '.ko.vtt'))
             if not os.path.exists(srt_filepath):
                 vtt_data = requests.get(self.vtt, headers=LogicAni365.current_headers).content
-                write_file2(self.vtt, srt_filepath2)
+                write_file(self.vtt, srt_filepath2)
                 srt_data = convert_vtt_to_srt(vtt_data)
                 write_file(srt_data, srt_filepath) 
             self.headers = LogicAni365.current_headers
