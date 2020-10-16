@@ -224,7 +224,7 @@ class Ani365QueueEntity(FfmpegQueueEntity):
             url = 'https://www.jetcloud-list.cc/kr/episode/' + self.info['va']
             request_headers = {'User-Agent' : ('Mozilla/5.0 (Windows NT 10.0; WOW64) \ AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 \ Safari/537.36'), }
             
-            text = requests.get(url, headers=LogicAni365.current_headers).content
+            text = requests.get(url, headers=headers).content
             match = re.compile('src\=\"(?P<video_url>http.*?\.m3u8)').search(text)
             if match:
                 tmp = match.group('video_url')
