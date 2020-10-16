@@ -226,7 +226,7 @@ class Ani365QueueEntity(FfmpegQueueEntity):
                               'Authorization': 'lvjghte3utuek0Qdvs3o8utygtwjnQt74Ojkwk7P1f3awws2hd',
                               }
             
-            text = requests.get(url, headers=headers).content
+            text = requests.get(url, headers=request_headers).content
             match = re.compile('src\=\"(?P<video_url>http.*?\.m3u8)').search(text)
             if match:
                 tmp = match.group('video_url')
