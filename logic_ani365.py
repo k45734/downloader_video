@@ -222,7 +222,9 @@ class Ani365QueueEntity(FfmpegQueueEntity):
     def make_episode_info(self):
         try:
             url = 'https://www.jetcloud-list.cc/kr/episode/' + self.info['va']
-            request_headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:81.0) Gecko/20100101 Firefox/81.0' }
+            request_headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:81.0) Gecko/20100101 Firefox/81.0',
+                              'Authorization': 'lvjghte3utuek0Qdvs3o8utygtwjnQt74Ojkwk7P1f3awws2hd',
+                              }
             
             text = requests.get(url, headers=request_headers).content
             match = re.compile('src\=\"(?P<video_url>http.*?\.m3u8)').search(text)
@@ -236,6 +238,7 @@ class Ani365QueueEntity(FfmpegQueueEntity):
             match = re.compile('src\=\"(?P<vtt_url>http.*?\kr.vtt)').search(text)
             if match:
                 self.vtt = u'%s' % match.group('vtt_url')
+                print(self.vtt)
             match = re.compile(ur'(?P<title>.*?)\s*((?P<season>\d+)기)?\s*((?P<epi_no>\d+)화)').search(self.info['title'])
             if match:
                 self.content_title = match.group('title').strip()
@@ -265,7 +268,7 @@ class Ani365QueueEntity(FfmpegQueueEntity):
             srt_filepath = os.path.join(self.savepath, self.filename.replace('.mp4', '.ko.srt'))
             srt_filepath2 = os.path.join(self.savepath, self.filename.replace('.mp4', '.ko.vtt'))
             if not os.path.exists(srt_filepath):
-                vtt_data = requests.get(self.vtt, headers=headers).text
+                vtt_data = requests.get(self.vtt, headers=request_headers).content
                 write_file(vtt_data, srt_filepath2)
                 srt_data = convert_vtt_to_srt(vtt_data)
                 write_file(srt_data, srt_filepath)
