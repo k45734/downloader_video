@@ -222,8 +222,7 @@ class Ani365QueueEntity(FfmpegQueueEntity):
     def make_episode_info(self):
         try:
             url = 'https://www.jetcloud-list.cc/kr/episode/' + self.info['va']
-            request_headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:81.0) Gecko/20100101 Firefox/81.0',
-                              'Authorization': 'lvjghte3utuek0Qdvs3o8utygtwjnQt74Ojkwk7P1f3awws2hd',
+            request_headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36 Edge/16.16299',
                               }
             
             text = requests.get(url, headers=request_headers).content
